@@ -117,7 +117,7 @@ schtasks /F /delete /tn foobar /S host
 ## Timestomp
 (meterpreter) timestomp mimikatz.exe -v  
 
-Resource::
+# Resource::
 - https://www.botconf.eu/wp-content/uploads/2017/12/2017_tomonaga-muda-Hunting-Attacker-Activities.pdf
 - https://www.slideshare.net/votadlos/hunting-lateral-movement-in-windows-infrastructure
 - https://bitvijays.github.io/LFF-IPS-P3-Exploitation.html#net-user-domain
