@@ -1,5 +1,6 @@
 # List command - Offensive & Detection Course
 List command that used in Offensive &amp; Detection Course
+(If you want to view full pentest cheat sheet, please visit https://highon.coffee/blog/penetration-testing-tools-cheat-sheet/)  
 
 # Service Exploitation
 ## scan network & VA
