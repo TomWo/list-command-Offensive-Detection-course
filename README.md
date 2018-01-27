@@ -171,7 +171,7 @@ powershell "[System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain(
 ## Find admin user
 powershell "get-aduser -filter {AdminCount -eq 1} -Properties Name,AdminCount,ServicePrincipalName,PasswordLastSet,LastLogonDate,MemberOf"  
 ## Find admin group
-powershell "get-adgroup -filter {GroupCategory -eq 'Security' -AND Name -like '*admin*'}"  
+powershell "get-adgroup -filter {GroupCategory -eq 'Security' -AND Name -like '\*admin\*'}"  
 
 # Resource::
 - https://www.botconf.eu/wp-content/uploads/2017/12/2017_tomonaga-muda-Hunting-Attacker-Activities.pdf  
