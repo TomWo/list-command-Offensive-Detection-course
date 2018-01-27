@@ -75,7 +75,7 @@ net config workstation
 net view
   
 ## Schtask
-AT \\REMOTECOMPUTERNAME 12:34 "command to run"  
+AT \\\REMOTECOMPUTERNAME 12:34 "command to run"  
 
 ## schtask - create new schedule task
 schtasks /create /tn <taskname> /tr <taskrun> /sc <scheduleType MINUTE, HOURLY, DAILY, WEEKLY, MONTHLY, ONCE, ONSTART, ONLOGON, ONIDLE> /st <StartTime> /S <remote host> /RU <permissions of the specified user account>  
