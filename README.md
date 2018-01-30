@@ -58,6 +58,10 @@ tasklist
 systeminfo  
 whoami  
 whoami /priv  
+whoami /all  
+taskkill /f /pid 7236  
+taskkill /f /im "Taskmgr.exe"  
+
 ## Bypass UAC & Privilege Escalation
 use exploit/windows/local/bypassuac  
 use exploit/windows/local/bypassuac_eventvwr  
