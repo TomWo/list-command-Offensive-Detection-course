@@ -273,3 +273,4 @@ powershell "get-adgroup -filter {GroupCategory -eq 'Security' -AND Name -like '\
 - https://github.com/kmkz/Pentesting/blob/master/Pentest-cheat-sheet  
 - https://www.slideshare.net/chrisgates/adversarial-simulation-nickersongates-wild-west-hacking-fest-oct-2017-81444587?qid=f71aedc6-c352-4154-bc51-3faefd5fc0ac&v=&b=&from_search=1
 - http://www.sploitspren.com/2018-01-26-Windows-Privilege-Escalation-Guide/
+- http://www.handgrep.se/repository/cheatsheets/postexploitation/WindowsPost-Exploitation.pdf
