@@ -138,7 +138,8 @@ C:> systeminfo > sysinfo.txt
 git clone https://github.com/GDSSecurity/Windows-Exploit-Suggester
 cd Windows-Exploit-Suggester  
 ./windows-exploit-suggester.py --update  
-./windows-exploit-suggester.py --database 2014-06-06-mssb.xlsx --systeminfo win7sp1-systeminfo.txt  
+./windows-exploit-suggester.py --database 2014-06-06-mssb.xlsx --systeminfo sysinfo.txt  
+./windows-exploit-suggester.py -i sysinfo.txt -d 2014-06-06-mssb.xlsx -l  
 
 
 ## Dump the hash
