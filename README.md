@@ -95,7 +95,9 @@ net use
 net share  
 net group "domain admins" /domain  
 net config workstation  
-net view
+net view  
+net view /domain  
+net view /domain:"domain name"  
   
 ## Schtask
 AT \\\REMOTECOMPUTERNAME 12:34 "command to run"  
