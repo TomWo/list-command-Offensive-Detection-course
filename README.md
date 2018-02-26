@@ -305,3 +305,4 @@ powershell "get-adgroup -filter {GroupCategory -eq 'Security' -AND Name -like '\
 - https://www.attackdebris.com/?p=470  
 - https://www.blackhat.com/docs/us-15/materials/us-15-Graeber-Abusing-Windows-Management-Instrumentation-WMI-To-Build-A-Persistent%20Asynchronous-And-Fileless-Backdoor-wp.pdf  
 - https://github.com/togie6/Windows-Privesc/blob/master/windows%20privesc%20sectalks%20BNE0x19.pdf  
+- http://cert.europa.eu/static/WhitePapers/CERT-EU_SWP_17-002_Lateral_Movements.pdf  
